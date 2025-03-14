@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./main.ts"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <form id="task-form">
+        <input id="task-name" type="text" placeholder="task" required>
+        <input id="task-description" type="text" placeholder="add description" required>
+       
+        <select name="department" id="task-department-select">
+            <option value="front-end">Front-end</option>
+            <option value="backend">Back-end</option>
+            <option value="UX-design">UX-design</option>
+        </select>
+        <button>Add task</button>
+    </form>
+
+   
+
+    <form id="member-form">
+        <input type="text" placeholder="name" required>
+       
+        <select name="role" id="member-select">
+            <option value="front-end">Front-end</option>
+            <option value="backend">Back-end</option>
+            <option value="UX-design">UX-design</option>
+        </select>
+        <button>Add member</button>
+    </form>
+
+    <form id="assign-form">
+        <select id="assign-task-to-member-member"></select>
+        <select id="assign-task-to-member-task"></select>
+        <button id="assign-task-to-member-final">Assign task to member</button>
+    </form>
+
+    <form id="filter-form">
+        <label for="filter-tasks">Filter tasks in progress by:</label>
+        <select id="filter-tasks">
+            <option value="assignedMember">Assigned member</option>
+            <option value="category">Category</option>
+            <option value="all">All</option>
+        </select>
+    </form>
+    
+    <form id="sort-form">
+        <label for="sort-tasks">Sort tasks by:</label>
+        <select id="sort-tasks">
+            <option value="Date (oldest to newest)">Date (oldest to newest)</option>
+            <option value="Date (newest to oldest)">Date (newest to oldest)</option>
+            <option value="Alphabetical order (ascending)">Alphabetical order (ascending)</option>
+            <option value="Alphabetical order (descending)">Alphabetical order (descending)</option>
+        </select>
+    </form>
+
+    <div class="columns" id="column-container">
+        <div id="header-columns">
+            <div id="team-members-header"><h2>Team members:</h2></div>
+            <div id="new-tasks-header"><h2>New tasks</h2></div>
+            <div id="tasks-in-progress-header"><h2>Tasks in progress</h2></div>
+            <div id="tasks-done-header"><h2>Finished tasks</h2></div>
+        </div>
+        <div id="content-columns">
+            <div id="membersContainer"></div>
+            <div id="new-tasks"></div>
+            <div id="in-progress-tasks"></div>
+            <div id="done-tasks"></div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

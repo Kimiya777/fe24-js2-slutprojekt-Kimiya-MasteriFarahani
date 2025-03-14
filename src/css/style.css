@@ -1,0 +1,129 @@
+*{
+    box-sizing: border-box;
+}
+
+#tasksContainer div {
+    display: flex;
+    border: 1px solid black;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+p {
+    cursor: pointer;
+}
+
+.columns {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border: 1px solid black;
+    width: 80%;
+    min-width:80%;
+    min-height: 80%;
+    max-width: 80%;
+}
+#membersContainer{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 250px;
+    border: 1px solid black;
+    min-width: 250px;  
+    max-width: 250px;  
+    overflow-x: hidden;  
+    word-wrap: break-word;
+}
+#new-tasks {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+    min-width: 25%;  
+    max-width: 25%;  
+    overflow-x: hidden;  
+    word-wrap: break-word;
+}
+
+#in-progress-tasks {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+    min-width: 25%;  
+    max-width: 25%;  
+    overflow-x: hidden;  
+    word-wrap: break-word;
+}
+
+#done-tasks {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+    min-width: 25%;  
+    max-width: 25%;  
+    overflow-x: hidden;  
+    word-wrap: break-word;
+}
+
+#team-members-header {
+    display: flex;
+    height: 100%;
+    width: 25%;
+    min-width: 25%;
+    border: 1px solid black;
+}
+
+#new-tasks-header {
+    display: flex;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+}
+
+#tasks-in-progress-header {
+    display: flex;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+}
+
+#tasks-done-header {
+    display: flex;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+}
+
+#header-columns{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    width: 100%;
+    height: 10%;
+}
+#content-columns{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    width: 100%;
+    height: 90%;
+}
+
+#taskDivs{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 25%;
+    border: 1px solid black;
+    min-width: 25%;  
+    max-width: 25%;  
+    overflow-x: hidden;  
+    word-wrap: break-word;
+}
