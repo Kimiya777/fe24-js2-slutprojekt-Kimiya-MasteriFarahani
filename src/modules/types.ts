@@ -14,12 +14,12 @@ export type Member = {
 }
 
 
-
+/** 
 export class MemberArray = {
     name: string;
     role: string;
 }
-
+**/
 
 export class TaskArray {
     done: boolean;
