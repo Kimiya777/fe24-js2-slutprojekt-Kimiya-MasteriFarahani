@@ -61,7 +61,6 @@ export class Member {
         this.role = role;
     }
 
-    // Example method to update member's role
     updateRole(newRole: string) {
         this.role = newRole;
     }

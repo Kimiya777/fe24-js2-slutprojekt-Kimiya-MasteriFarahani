@@ -16,8 +16,8 @@ export async function getAllTasks(): Promise<Task[]> {
         console.log(firebaseID, obj)
         //const tasks: Task[] = [];
         return {
-            ...(obj as Task), // Spread task data, ensuring TypeScript sees it as Task
-            id: firebaseID || "UNKNOWN_ID"// Include Firebase ID
+            ...(obj as Task), 
+            id: firebaseID || "UNKNOWN_ID"
         };
 
     })

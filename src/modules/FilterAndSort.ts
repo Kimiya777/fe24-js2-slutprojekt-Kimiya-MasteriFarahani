@@ -2,13 +2,11 @@ import { getAllTasks } from "./TaskFirebase.ts";
 import { renderAllTasks } from "./render.ts";
 import { Task } from "./types.ts";
 
-// Get references to the DOM elements
 const filterForm = document.getElementById('filterForm') as HTMLFormElement;
 const filterCategorySelect = document.getElementById('category-filter') as HTMLSelectElement;
 const filterMemberSelect = document.getElementById('member-filter') as HTMLSelectElement;
 const sortSelect = document.getElementById('sort-tasks') as HTMLSelectElement;
 
-// Define the functions for filtering and sorting tasks
 function applyFilters(tasks: Task[], memberFilter: string, categoryFilter: string): Task[] {
     return tasks.filter(task => {
         const isAssignedToMember = memberFilter ? task.assignedMember === memberFilter : true;
@@ -28,7 +26,7 @@ function applySorting(tasks: Task[], sortBy: string): Task[] {
         case "Alphabetical order (descending)":
             return tasks.sort((a, b) => b.task.localeCompare(a.task));
         default:
-            return tasks; // No sorting applied if invalid option
+            return tasks; 
     }
 }
 
@@ -36,30 +34,27 @@ export function renderFilteredAndSortedTasks(tasks: Task[], memberFilter: string
     let filteredTasks = applyFilters(tasks, memberFilter, categoryFilter);
     let sortedTasks = applySorting(filteredTasks, sortBy);
 
-    renderAllTasks(sortedTasks); // Update the view with filtered and sorted tasks
+    renderAllTasks(sortedTasks); 
 }
 
-// Event listener for the filter apply button
+
 filterForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // Prevent form submission and page reload
+    event.preventDefault(); 
 
     const selectedMemberFilter = filterMemberSelect.value;
     const selectedCategoryFilter = filterCategorySelect.value;
     
-    // Get all tasks and render them based on filters and sort
     getAllTasks().then((tasks) => {
         const selectedSortOption = sortSelect.value;
         renderFilteredAndSortedTasks(tasks, selectedMemberFilter, selectedCategoryFilter, selectedSortOption);
     });
 });
 
-// Event listener for the sort apply button
 sortSelect.addEventListener('change', () => {
     const selectedMemberFilter = filterMemberSelect.value;
     const selectedCategoryFilter = filterCategorySelect.value;
     const selectedSortOption = sortSelect.value;
 
-    // Get all tasks and render them based on filters and sort
     getAllTasks().then((tasks) => {
         renderFilteredAndSortedTasks(tasks, selectedMemberFilter, selectedCategoryFilter, selectedSortOption);
     });

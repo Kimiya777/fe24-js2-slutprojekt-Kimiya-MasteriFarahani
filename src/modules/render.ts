@@ -156,18 +156,6 @@ export function renderAllMembers(memberObj: Object) {
         filterByMemberOption.innerText = memberObj[firebaseID].name;
         filterMemberSelect.append(filterByMemberOption);
         filterMemberSelect.value = firebaseID;
-
-        // const membersAssignSelect = document.querySelector("#assign-task-to-member-member") as HTMLSelectElement;
-
-
-
-
-        // Om task är utförd, stryk över och lägg till deleteknapp
-
-
-        // Uppdatera done, true till false, eller false till true
-
-
     }
 }
 
