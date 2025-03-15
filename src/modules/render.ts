@@ -1,6 +1,7 @@
 import { deleteTask, getAllTasks, patchDone, assignTask, changeTaskStatus } from "./TaskFirebase.ts";
 import { getAllMembers } from "./MembersFirebase.ts";
 import { memberForm } from "../main.ts";
+import { Task } from "./types.ts";
 //import { filterByMember, filterByCategory, sortByTimestamp, sortByTitle } from "./FilterAndSort";
 
 const assignButton = document.querySelector('#assign-task-to-member-final') as HTMLButtonElement;
@@ -9,13 +10,12 @@ const taskSelect = document.querySelector("#assign-task-to-member-task") as HTML
 const memberSelect = document.querySelector("#assign-task-to-member-member") as HTMLSelectElement;
 
 
-const sortForm = document.getElementById('sort-form') as HTMLFormElement;
-const filterForm = document.getElementById('filter-form') as HTMLFormElement;
-const filterCategorySelect = document.getElementById('category-select') as HTMLSelectElement;
-const filterMemberSelect = document.getElementById('member-select') as HTMLSelectElement;
+const filterForm = document.getElementById('filterForm') as HTMLFormElement;
+const filterCategorySelect = document.getElementById('category-filter') as HTMLSelectElement;
+const filterMemberSelect = document.getElementById('member-filter') as HTMLSelectElement;
 const sortSelect = document.getElementById('sort-tasks') as HTMLSelectElement;
 
-export function renderAllTasks(taskObj: Object) {
+export function renderAllTasks(taskArray: Task[]): void {
     const newTasksContainer = document.querySelector("#new-tasks") as HTMLDivElement;
     const inProgressContainer = document.querySelector("#in-progress-tasks") as HTMLDivElement;
     const doneTasksContainer = document.querySelector("#done-tasks") as HTMLDivElement;
@@ -25,13 +25,13 @@ export function renderAllTasks(taskObj: Object) {
     doneTasksContainer.innerHTML = '';
     taskSelect.innerHTML = '';
 
-    for (const firebaseID in taskObj) {
-        const task = taskObj[firebaseID];
+    for (const task of taskArray) {
+        const taskID = task.id|| "unknown-id";
 
         const container = document.createElement('div');
         const taskName = document.createElement('h3');
 
-        container.id = firebaseID;
+        container.id = taskID;
         taskName.innerText = task.task;
         container.append(taskName);
 
@@ -68,7 +68,7 @@ export function renderAllTasks(taskObj: Object) {
             doneCheckbox.type = 'checkbox';
             doneCheckbox.addEventListener('change', async () => {
                 if (doneCheckbox.checked) {
-                    await changeTaskStatus(firebaseID, "done");
+                    await changeTaskStatus(taskID, "done");
                     const tasks = await getAllTasks();
                     renderAllTasks(tasks);
 
@@ -98,7 +98,7 @@ export function renderAllTasks(taskObj: Object) {
             container.append(delBtn);
 
             delBtn.addEventListener('click', async () => {
-                await deleteTask(firebaseID);
+                await deleteTask(taskID);
                 const tasks = await getAllTasks();
                 renderAllTasks(tasks);
             });
@@ -112,10 +112,11 @@ export function renderAllTasks(taskObj: Object) {
             newTasksContainer.append(container);
 
             const taskOption = document.createElement('option') as HTMLOptionElement;
-            taskOption.value = firebaseID;
+            taskOption.value = task.id as string;
             taskOption.innerText = task.task;
             taskSelect.append(taskOption);
         }
+        console.log(task.task);
     }
 }
 
@@ -150,6 +151,12 @@ export function renderAllMembers(memberObj: Object) {
         memberSelect.append(membersOptions);
         memberSelect.value = firebaseID;
 
+        const filterByMemberOption = document.createElement('option') as HTMLOptionElement;
+        filterByMemberOption.value = firebaseID;
+        filterByMemberOption.innerText = memberObj[firebaseID].name;
+        filterMemberSelect.append(filterByMemberOption);
+        filterMemberSelect.value = firebaseID;
+
         // const membersAssignSelect = document.querySelector("#assign-task-to-member-member") as HTMLSelectElement;
 
 
@@ -172,6 +179,7 @@ assignButton.addEventListener('click', async event => {
     const selectedTaskID = taskSelect.value;
     const selectedMemberID = memberSelect.value;
 
+    console.log("tasSelect")
     console.log(selectedTaskID);
     // console.log("hej");
 
@@ -193,7 +201,15 @@ assignButton.addEventListener('click', async event => {
 
     **/
     const memberDepartment = members[selectedMemberID].role;
-    const taskDepartment = tasks2[selectedTaskID].department;
+    //const taskDepartment = tasks2[selectedTaskID].department;
+    const selectedTask = tasks2.find(task => task.id === selectedTaskID);
+
+if (!selectedTask) {
+    console.log("Error: Selected task not found!");
+    return;
+}
+
+const taskDepartment = selectedTask.department;
 
     console.log("Member's Role:", memberDepartment);
     console.log("Task's Department:", taskDepartment);
@@ -209,5 +225,6 @@ assignButton.addEventListener('click', async event => {
     }
     else {
         console.log('choose a member whose role matches the department of your chosen task');
+        window.alert("choose a member whose role matches the department of your chosen task!");
     }
 });
