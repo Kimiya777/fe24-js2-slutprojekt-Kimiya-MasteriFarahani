@@ -1,44 +1,31 @@
-const BASE_URL = 'https://slutprojekt-js2-654ce-default-rtdb.europe-west1.firebasedatabase.app/members';
 
 import { Member } from "./types";
 
-export async function getAllMembers():Promise<Object>{
-    const url = BASE_URL+'.json'
+const BASE_URL = 'https://slutprojekt-js2-654ce-default-rtdb.europe-west1.firebasedatabase.app/members';
 
+export async function getAllMembers(): Promise<Object> {
+    const url = BASE_URL + '.json';
     const res = await fetch(url);
     const memberObj = await res.json();
-    // console.log(taskObj)
-
-    return memberObj;
+    
+    // Map the raw object into Member instances
+    const members = Object.keys(memberObj).map(id => new Member(memberObj[id].name, memberObj[id].role));
+    
+    return members;
 }
 
-export async function postMembers(members: Member){
-    const url = BASE_URL+'.json';
-console.log(members);
+export async function postMembers(member: Member) {
+    const url = BASE_URL + '.json';
     const options = {
         method: 'POST',
-        body: JSON.stringify(members),
+        body: JSON.stringify({
+            name: member.name,
+            role: member.role
+        }),
         headers: {
             'Content-type': 'application/json'
         }
-    }
-
-    const res = await fetch(url, options);
-    const data = await res.json();
-    console.log(data);
-}
-
-export async function patchDone(id:string, role:string){
-    console.log(id, role)
-
-    const url = BASE_URL + `/${id}.json`;
-    const options = {
-        method: 'PATCH', 
-        body: JSON.stringify( {role} ),
-        headers: {
-            'Content-type': 'application/json'
-        }
-    }
+    };
 
     const res = await fetch(url, options);
     const data = await res.json();

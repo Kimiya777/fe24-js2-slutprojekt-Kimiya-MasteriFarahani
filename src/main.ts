@@ -56,13 +56,14 @@ memberForm!.addEventListener('submit', async event =>{
     
 
     console.log(member);
-
+/** 
     const memberObj:Member = {
 
         name: member,
         role: memberRole,
  
-    }
+    }**/
+        const memberObj: Member = new Member(member, memberRole);
 
     await postMembers(memberObj);
     const members = await getAllMembers();

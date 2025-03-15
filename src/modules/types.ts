@@ -1,4 +1,4 @@
- export type Task = {
+export type Task = {
     done: boolean,
     task: string,
     department: string,
@@ -6,20 +6,22 @@
     date: string,
     assignedMember: string,
     description: string,
+    id?: string
 }
 
-export type Member = {
-    name: string,
-    role: string,
-}
+
+//export type Member = {
+//    name: string,
+ //   role: string,
+//}
 
 
 /** 
 export class MemberArray = {
     name: string;
     role: string;
-}
-**/
+}**/
+
 
 export class TaskArray {
     done: boolean;
@@ -46,6 +48,22 @@ export class TaskArray {
         this.date = taskData.date;
         this.assignedMember = taskData.assignedMember;
         this.description = taskData.description;
+    }
+}
+    
+
+export class Member {
+    name: string;
+    role: string;
+
+    constructor(name: string, role: string) {
+        this.name = name;
+        this.role = role;
+    }
+
+    // Example method to update member's role
+    updateRole(newRole: string) {
+        this.role = newRole;
     }
 }
     
