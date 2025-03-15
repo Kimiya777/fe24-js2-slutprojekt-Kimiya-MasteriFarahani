@@ -156,6 +156,8 @@ export function renderAllMembers(memberObj: Object) {
         filterByMemberOption.innerText = memberObj[firebaseID].name;
         filterMemberSelect.append(filterByMemberOption);
         filterMemberSelect.value = firebaseID;
+
+
     }
 }
 

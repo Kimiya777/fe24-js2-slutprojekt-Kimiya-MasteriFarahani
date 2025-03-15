@@ -41,14 +41,20 @@
         <button id="assign-task-to-member-final">Assign task to member</button>
     </form>
 
-    <form id="filter-form">
-        <label for="filter-tasks">Filter tasks in progress by:</label>
-        <select id="filter-tasks">
-            <option value="assignedMember">Assigned member</option>
-            <option value="category">Category</option>
-            <option value="all">All</option>
+    <form id="filterForm">
+
+        <select name="filter-by-category" id="category-filter">
+            <option value="">all</option>
+            <option value="front-end">Front-end</option>
+            <option value="backend">Back-end</option>
+            <option value="UX-design">UX-design</option>
         </select>
-    </form>
+
+        <select name="filter-by-member" id="member-filter">
+            <option value="">all</option>
+        </select>
+        <button id="apply-filters">Apply Filters</button>
+</form>
     
     <form id="sort-form">
         <label for="sort-tasks">Sort tasks by:</label>
@@ -74,7 +80,6 @@
             <div id="done-tasks"></div>
         </div>
     </div>
-    
 
 </body>
 </html>
