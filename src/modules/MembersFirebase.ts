@@ -1,4 +1,3 @@
-// MembersFirebase.ts
 import { Member } from "./types";
 
 const BASE_URL = 'https://slutprojekt-js2-654ce-default-rtdb.europe-west1.firebasedatabase.app/members';
@@ -7,9 +6,9 @@ export async function getAllMembers(): Promise<Object> {
     const url = BASE_URL + '.json';
     const res = await fetch(url);
     const memberObj = await res.json();
-    
+
     const members = Object.keys(memberObj).map(id => new Member(memberObj[id].name, memberObj[id].role));
-    
+
     return members;
 }
 

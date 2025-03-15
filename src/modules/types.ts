@@ -1,18 +1,56 @@
-export type Task = {
-    done: boolean,
-    task: string,
-    department: string,
-    status: string,
-    date: string,
-    assignedMember: string,
-    description: string,
-    id?: string
-}
+/**export type Task = {
+   done: boolean,
+   task: string,
+   department: string,
+   status: string,
+   date: string,
+   assignedMember: string,
+   description: string,
+   id?: string
+}**/
 
+export class Task {
+    done: boolean;
+    task: string;
+    department: string;
+    status: string;
+    date: string;
+    assignedMember: string;
+    description: string;
+    id?: string
+
+    constructor(taskData: {
+        done: boolean;
+        task: string;
+        department: string;
+        status: string;
+        date: string;
+        assignedMember: string;
+        description: string;
+        id?: string
+
+    }) {
+        this.done = taskData.done;
+        this.task = taskData.task;
+        this.department = taskData.department;
+        this.status = taskData.status;
+        this.date = taskData.date;
+        this.assignedMember = taskData.assignedMember;
+        this.description = taskData.description;
+    }
+
+    // assignMember(memberName: string) {
+    //    this.assignedMember = memberName;
+    //}
+
+    //updateStatus(newStatus: string) {
+    //    this.status = newStatus;
+    //}
+}
 
 //export type Member = {
 //    name: string,
- //   role: string,
+//   role: string,
 //}
 
 
@@ -50,7 +88,7 @@ export class TaskArray {
         this.description = taskData.description;
     }
 }
-    
+
 
 export class Member {
     name: string;
@@ -65,4 +103,3 @@ export class Member {
         this.role = newRole;
     }
 }
-    

@@ -1,18 +1,20 @@
-import { getAllTasks } from "./TaskFirebase.ts";
-import { renderAllTasks } from "./render.ts";
-import { Task } from "./types.ts";
+import { Task } from "./types";
+import { renderAllTasks } from "./render";
+import { getAllTasks } from "./TaskFirebase";
 
-const filterForm = document.getElementById('filterForm') as HTMLFormElement;
-const filterCategorySelect = document.getElementById('category-filter') as HTMLSelectElement;
-const filterMemberSelect = document.getElementById('member-filter') as HTMLSelectElement;
-const sortSelect = document.getElementById('sort-tasks') as HTMLSelectElement;
 
-function applyFilters(tasks: Task[], memberFilter: string, categoryFilter: string): Task[] {
-    return tasks.filter(task => {
-        const isAssignedToMember = memberFilter ? task.assignedMember === memberFilter : true;
-        const isInCategory = categoryFilter ? task.department === categoryFilter : true;
-        return isAssignedToMember && isInCategory && task.status === 'in progress'; // Only filter 'in progress' tasks
-    });
+function applyCategoryFilter(tasks: Task[], categoryFilter: string): Task[] {
+    if (categoryFilter !== "all") {
+        return tasks.filter(task => task.department === categoryFilter);
+    }
+    return tasks;
+}
+
+function applyMemberFilter(tasks: Task[], memberFilter: string): Task[] {
+    if (memberFilter !== "all") {
+        return tasks.filter(task => task.assignedMember === memberFilter);
+    }
+    return tasks;
 }
 
 function applySorting(tasks: Task[], sortBy: string): Task[] {
@@ -26,36 +28,22 @@ function applySorting(tasks: Task[], sortBy: string): Task[] {
         case "Alphabetical order (descending)":
             return tasks.sort((a, b) => b.task.localeCompare(a.task));
         default:
-            return tasks; 
+            return tasks;
     }
 }
 
-export function renderFilteredAndSortedTasks(tasks: Task[], memberFilter: string, categoryFilter: string, sortBy: string): void {
-    let filteredTasks = applyFilters(tasks, memberFilter, categoryFilter);
-    let sortedTasks = applySorting(filteredTasks, sortBy);
+export function activateSortingAndFiltering(
+    tasks: Task[],
+    categoryFilter: string,
+    memberFilter: string,
+    sortBy: string
+) {
 
-    renderAllTasks(sortedTasks); 
+    let filteredTasks = applyCategoryFilter(tasks, categoryFilter);
+
+    filteredTasks = applyMemberFilter(filteredTasks, memberFilter);
+
+    filteredTasks = applySorting(filteredTasks, sortBy);
+
+    renderAllTasks(filteredTasks);
 }
-
-
-filterForm.addEventListener('submit', (event) => {
-    event.preventDefault(); 
-
-    const selectedMemberFilter = filterMemberSelect.value;
-    const selectedCategoryFilter = filterCategorySelect.value;
-    
-    getAllTasks().then((tasks) => {
-        const selectedSortOption = sortSelect.value;
-        renderFilteredAndSortedTasks(tasks, selectedMemberFilter, selectedCategoryFilter, selectedSortOption);
-    });
-});
-
-sortSelect.addEventListener('change', () => {
-    const selectedMemberFilter = filterMemberSelect.value;
-    const selectedCategoryFilter = filterCategorySelect.value;
-    const selectedSortOption = sortSelect.value;
-
-    getAllTasks().then((tasks) => {
-        renderFilteredAndSortedTasks(tasks, selectedMemberFilter, selectedCategoryFilter, selectedSortOption);
-    });
-});

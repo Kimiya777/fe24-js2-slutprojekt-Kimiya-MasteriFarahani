@@ -4,16 +4,16 @@ import { memberForm } from "../main.ts";
 import { Task } from "./types.ts";
 //import { filterByMember, filterByCategory, sortByTimestamp, sortByTitle } from "./FilterAndSort";
 
+
+//DOM elementen 
+
 const assignButton = document.querySelector('#assign-task-to-member-final') as HTMLButtonElement;
 
 const taskSelect = document.querySelector("#assign-task-to-member-task") as HTMLSelectElement;
 const memberSelect = document.querySelector("#assign-task-to-member-member") as HTMLSelectElement;
 
-
-const filterForm = document.getElementById('filterForm') as HTMLFormElement;
-const filterCategorySelect = document.getElementById('category-filter') as HTMLSelectElement;
 const filterMemberSelect = document.getElementById('member-filter') as HTMLSelectElement;
-const sortSelect = document.getElementById('sort-tasks') as HTMLSelectElement;
+//const sortSelect = document.getElementById('sort-tasks') as HTMLSelectElement;
 
 export function renderAllTasks(taskArray: Task[]): void {
     const newTasksContainer = document.querySelector("#new-tasks") as HTMLDivElement;
@@ -26,7 +26,7 @@ export function renderAllTasks(taskArray: Task[]): void {
     taskSelect.innerHTML = '';
 
     for (const task of taskArray) {
-        const taskID = task.id|| "unknown-id";
+        const taskID = task.id || "unknown-id";
 
         const container = document.createElement('div');
         const taskName = document.createElement('h3');
@@ -152,11 +152,13 @@ export function renderAllMembers(memberObj: Object) {
         memberSelect.value = firebaseID;
 
         const filterByMemberOption = document.createElement('option') as HTMLOptionElement;
-        filterByMemberOption.value = firebaseID;
+        filterByMemberOption.value = memberObj[firebaseID].name;
         filterByMemberOption.innerText = memberObj[firebaseID].name;
         filterMemberSelect.append(filterByMemberOption);
-        filterMemberSelect.value = firebaseID;
+        filterMemberSelect.value = memberObj[firebaseID].name;
 
+
+        // const membersAssignSelect = document.querySelector("#assign-task-to-member-member") as HTMLSelectElement;
 
     }
 }
@@ -183,23 +185,16 @@ assignButton.addEventListener('click', async event => {
 
     const selectedMember = members[selectedMemberID];
 
-/** 
-    if (!selectedMember) {
-        console.log("Error: Member not found!");
-        return;
-    }
-
-    **/
     const memberDepartment = members[selectedMemberID].role;
     //const taskDepartment = tasks2[selectedTaskID].department;
     const selectedTask = tasks2.find(task => task.id === selectedTaskID);
 
-if (!selectedTask) {
-    console.log("Error: Selected task not found!");
-    return;
-}
+    if (!selectedTask) {
+        console.log("Error: Selected task not found!");
+        return;
+    }
 
-const taskDepartment = selectedTask.department;
+    const taskDepartment = selectedTask.department;
 
     console.log("Member's Role:", memberDepartment);
     console.log("Task's Department:", taskDepartment);
@@ -209,7 +204,7 @@ const taskDepartment = selectedTask.department;
         await assignTask(selectedTaskID, selectedMember.name);
         await changeTaskStatus(selectedTaskID, "in progress");
 
-        // Uppdaterar tasks efter att ha assignat
+        // Uppdaterar tsksen efter att ha assignat
         const tasks = await getAllTasks();
         renderAllTasks(tasks);
     }

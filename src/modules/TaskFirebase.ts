@@ -16,7 +16,7 @@ export async function getAllTasks(): Promise<Task[]> {
         console.log(firebaseID, obj)
         //const tasks: Task[] = [];
         return {
-            ...(obj as Task), 
+            ...(obj as Task),
             id: firebaseID || "UNKNOWN_ID"
         };
 
@@ -37,12 +37,12 @@ export async function getAllTasks(): Promise<Task[]> {
      
  }) **/
 
-     console.log(taskArray);
+    console.log(taskArray);
     //return taskObj;
     return taskArray;
-    
 
-    
+
+
 
 }
 
